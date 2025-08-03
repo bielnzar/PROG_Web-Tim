@@ -71,9 +71,8 @@
       </div>
     </div>
 
-    <!-- Bagian Bawah -->
     <div class="mt-8 md:mt-4 text-center text-sm">
-      ©2025, All Rights Reserved by Abinara-1 ITS Robotics.
+      ©2025, All Rights Reserved by Abinara-1 ITS Robotics Team.
     </div>
   </footer>
 </template>

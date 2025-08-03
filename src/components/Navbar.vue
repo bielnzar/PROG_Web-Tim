@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <router-link to="/">
-          <img src="../assets/images/LogoAbinara-Merah.png" class="logo h-18" />
+          <img src="/LogoAbinara-Merah.png" class="logo h-18" />
         </router-link>
 
         <!-- Desktop Menu -->
