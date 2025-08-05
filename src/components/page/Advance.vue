@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4 mt-20">
+  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4 mt-30">
     <h2
       data-aos="fade-down"
       class="place-self-center lg:text-7xl font-bold leading-tight md:text-6xl sm:text-6xl md:mt-0 text-5xl gradient-text"
     >
       Road to Advance 1.0
     </h2>
-    <h4 class="text-center text-xl italic text-gray-500 mt-4 mb-8 max-w-3xl" data-aos="zoom-in">“Discover. Learn. Build. Your Robotic Foundation Begins Here”</h4>
+    <h4 class="text-center text-xl italic text-gray-500 mt-4 max-w-3xl" data-aos="zoom-in">“Discover. Learn. Build. Your Robotic Foundation Begins Here”</h4>
     <div class="w-full max-w-2xl p-8 space-y-6 mt-10 bg-white rounded-xl shadow-2xl mb-30">
       <h1 class="text-3xl font-bold text-center text-gray-900">Workshop Registration Form</h1>
       
@@ -113,6 +113,24 @@
           </select>
         </div>
 
+        <div>
+          <label for="Bukti-Pembayaran" class="block text-sm font-medium text-gray-700">Bukti Pembayaran</label>
+          <input 
+            @change="handleFileChange"
+            id="Bukti-Pembayaran"
+            name="Bukti Pembayaran" 
+            type="file" 
+            accept="image/*"
+            required
+            class="w-full text-sm text-gray-500 mt-2
+                   file:mr-4 file:py-2 file:px-4
+                   file:rounded-md file:border-0
+                   file:text-sm file:font-semibold
+                   file:bg-red-50 file:text-red-700
+                   hover:file:bg-red-100"
+          >
+        </div>
+
         <button 
           type="submit"
           :disabled="isLoading"
@@ -140,30 +158,64 @@ const formData = reactive({
   'Paket Pilihan': '',
 });
 
+const fileData = ref({
+  base64: '',
+  name: '',
+  type: ''
+});
+
 const isLoading = ref(false);
 const message = ref('');
 const isError = ref(false);
 
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    fileData.value = {
+      base64: event.target.result,
+      name: file.name,
+      type: file.type
+    };
+  };
+  reader.readAsDataURL(file);
+};
+
 const handleSubmit = async () => {
+  if (!fileData.value.base64) {
+    message.value = 'Mohon unggah bukti pembayaran Anda.';
+    isError.value = true;
+    return;
+  }
+
   isLoading.value = true;
   message.value = '';
   isError.value = false;
 
-  const body = new FormData();
+  const finalForm = new FormData();
+
   for (const key in formData) {
-      body.append(key, formData[key]);
+    finalForm.append(key, formData[key]);
   }
 
+  finalForm.append('fileData', fileData.value.base64);
+  finalForm.append('fileName', fileData.value.name);
+  finalForm.append('mimeType', fileData.value.type);
+
   try {
-    const response = await fetch(scriptURL, { method: 'POST', body: body });
+    const response = await fetch(scriptURL, { method: 'POST', body: finalForm });
     const result = await response.json();
 
     if (result.result === 'success') {
       message.value = 'Data Anda telah berhasil terkirim. Matur Nuwun!';
       isError.value = false;
-      Object.keys(formData).forEach(key => {
-        formData[key] = '';
-      });
+
+      Object.keys(formData).forEach(key => { formData[key] = ''; });
+      fileData.value = { base64: '', name: '', type: '' };
+
+      document.getElementById('Bukti-Pembayaran').value = null;
     } else {
       throw new Error(result.error || 'Terjadi kesalahan.');
     }
