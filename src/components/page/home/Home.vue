@@ -22,6 +22,27 @@
               The team consists of students of Sepuluh Nopember Institute of Technology. one of the
               competitions that is followed is KRSRI (Kontes Robot SAR Indonesia).
             </p>
+            <router-link to="/advance" class="mt-8 inline-block" data-aos="fade-up-right">
+              <button
+                class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-bold cursor-pointer text-white bg-gradient-to-r from-red-600 to-red-800 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300 ease-in-out"
+              >
+                <span class="relative">Regist Advance 1.0</span>
+                <svg
+                  class="w-5 h-5 ml-2 transform transition-transform duration-300 ease-in-out group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  ></path>
+                </svg>
+              </button>
+            </router-link>
           </div>
 
           <!-- Kolom Kanan: Gambar Faizzul -->
