@@ -50,7 +50,7 @@
             <div class="aspect-video rounded-2xl cursor-pointer overflow-hidden shadow-2xl hover:scale-102 duration-300 ease-in-out">
               <iframe
                 class="w-full h-full cursor-pointer"
-                src="https://www.youtube.com/embed/mr9PO-w45q0?autoplay=1&mute=0&loop=1&playlist=mr9PO-w45q0&controls=1&rel=0"
+                src="https://www.youtube.com/embed/mr9PO-w45q0?autoplay=1&mute=1&loop=1&playlist=mr9PO-w45q0&controls=1&rel=0"
                 title="Profile Team Video Player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
