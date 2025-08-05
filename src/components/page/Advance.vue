@@ -7,7 +7,7 @@
       Road to Advance 1.0
     </h2>
     <h4 class="text-center text-xl italic text-gray-500 mt-4 max-w-3xl" data-aos="zoom-in">“Discover. Learn. Build. Your Robotic Foundation Begins Here”</h4>
-    <div class="w-full max-w-2xl p-8 space-y-6 mt-10 bg-white rounded-xl shadow-2xl mb-30">
+    <div ref="formContainer" class="w-full max-w-2xl p-8 space-y-6 mt-10 bg-white rounded-xl shadow-2xl mb-30">
       <h1 class="text-3xl font-bold text-center text-gray-900">Workshop Registration Form</h1>
       
       <form 
@@ -154,6 +154,8 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue';
 
+const formContainer = ref(null);
+
 const scriptURL = 'https://script.google.com/macros/s/AKfycbz_6b_eyP2DeFiwXF_WqQQPK2f2LHm6pRXbCVUFJCYbo7amwJyVlTo8SThmUfL0X_NjFA/exec';
 
 const formData = reactive({
@@ -246,9 +248,19 @@ const handleSubmit = async () => {
 
       if (result.result === 'success') {
         message.value = 'Data Anda telah berhasil terkirim. Matur Nuwun!';
-        alert('Data Anda telah berhasil terkirim, Matur Nuwun! Halaman akan di refresh.');
+        isError.value = false;
         
-        location.reload();
+        Object.keys(formData).forEach(key => {
+          formData[key] = '';
+        });
+        fileData.value = { base64: '', name: '', type: '' };
+
+        document.getElementById('Bukti-Pembayaran').value = null;
+        
+        if (window.grecaptcha) {
+          window.grecaptcha.reset();
+        }
+        recaptchaToken.value = '';
       } 
       else {
         throw new Error(result.error || 'Terjadi kesalahan.');
@@ -260,6 +272,9 @@ const handleSubmit = async () => {
     } 
     finally {
       isLoading.value = false;
+      if (formContainer.value) {
+        formContainer.value.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 };  
 </script>
