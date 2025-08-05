@@ -28,6 +28,7 @@
             type="text" 
             placeholder="Masukkan nama lengkap Anda" 
             required
+            autocomplete="name"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
         </div>
@@ -41,6 +42,7 @@
             type="text" 
             placeholder="Masukkan NRP atau NIM Anda" 
             required
+            autocomplete="off"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
         </div>
@@ -54,6 +56,7 @@
             type="text" 
             placeholder="Contoh: Institut Teknologi Sepuluh Nopember" 
             required
+            autocomplete="organization"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
         </div>
@@ -67,6 +70,7 @@
             type="text" 
             placeholder="Contoh: Teknik Informatika" 
             required
+            autocomplete="off"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
         </div>
@@ -80,6 +84,7 @@
             type="tel" 
             placeholder="Contoh: 085781821926" 
             required
+            autocomplete="tel"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
         </div>
@@ -93,6 +98,7 @@
             type="email" 
             placeholder="Contoh: example@gmail.com" 
             required
+            autocomplete="email"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
         </div>
@@ -203,6 +209,8 @@ onMounted(() => {
   }, 100);
 });
 
+const honeypot = ref('');
+
 const handleSubmit = async () => {
     if (!recaptchaToken.value) {
       message.value = 'Mohon verifikasi bahwa kamu bukan robot!';
@@ -230,6 +238,7 @@ const handleSubmit = async () => {
     finalForm.append('fileName', fileData.value.name);
     finalForm.append('mimeType', fileData.value.type);
     finalForm.append('g-recaptcha-response', recaptchaToken.value);
+    finalForm.append('comment', honeypot.value);
 
     try {
       const response = await fetch(scriptURL, { method: 'POST', body: finalForm });
@@ -237,19 +246,19 @@ const handleSubmit = async () => {
 
       if (result.result === 'success') {
         message.value = 'Data Anda telah berhasil terkirim. Matur Nuwun!';
-        isError.value = false;
-
-        Object.keys(formData).forEach(key => { formData[key] = ''; });
-        fileData.value = { base64: '', name: '', type: '' };
-
-        document.getElementById('Bukti-Pembayaran').value = null;
-      } else {
+        alert('Data Anda telah berhasil terkirim, Matur Nuwun! Halaman akan di refresh.');
+        
+        location.reload();
+      } 
+      else {
         throw new Error(result.error || 'Terjadi kesalahan.');
       }
-    } catch (error) {
+    } 
+    catch (error) {
       message.value = `Gagal mengirim data: ${error.message}`;
       isError.value = true;
-    } finally {
+    } 
+    finally {
       isLoading.value = false;
     }
 };  
