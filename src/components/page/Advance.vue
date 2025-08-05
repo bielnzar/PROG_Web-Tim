@@ -130,6 +130,8 @@
                    hover:file:bg-red-100"
           >
         </div>
+        
+        <div id="recaptcha-widget"></div>
 
         <button 
           type="submit"
@@ -144,7 +146,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbz_6b_eyP2DeFiwXF_WqQQPK2f2LHm6pRXbCVUFJCYbo7amwJyVlTo8SThmUfL0X_NjFA/exec';
 
@@ -183,49 +185,74 @@ const handleFileChange = (e) => {
   reader.readAsDataURL(file);
 };
 
+const recaptchaToken = ref('');
+
+const onRecaptchaVerified = (token) => {
+  recaptchaToken.value = token;
+};
+
+onMounted(() => {
+  const checkRecaptcha = setInterval(() => {
+    if (window.grecaptcha && window.grecaptcha.render) {
+      clearInterval(checkRecaptcha);
+      window.grecaptcha.render('recaptcha-widget', {
+        'sitekey': '6Lfhn5srAAAAAIB_jwOcR9zE3dEYh7dcWziAzL0w',
+        'callback': onRecaptchaVerified,
+      });
+    }
+  }, 100);
+});
+
 const handleSubmit = async () => {
-  if (!fileData.value.base64) {
-    message.value = 'Mohon unggah bukti pembayaran Anda.';
+    if (!recaptchaToken.value) {
+      message.value = 'Mohon verifikasi bahwa kamu bukan robot!';
+      isError.value = true;
+      return;
+    }
+
+    if (!fileData.value.base64) {
+    message.value = 'Upload bukti pembayaran yaa!';
     isError.value = true;
     return;
-  }
-
-  isLoading.value = true;
-  message.value = '';
-  isError.value = false;
-
-  const finalForm = new FormData();
-
-  for (const key in formData) {
-    finalForm.append(key, formData[key]);
-  }
-
-  finalForm.append('fileData', fileData.value.base64);
-  finalForm.append('fileName', fileData.value.name);
-  finalForm.append('mimeType', fileData.value.type);
-
-  try {
-    const response = await fetch(scriptURL, { method: 'POST', body: finalForm });
-    const result = await response.json();
-
-    if (result.result === 'success') {
-      message.value = 'Data Anda telah berhasil terkirim. Matur Nuwun!';
-      isError.value = false;
-
-      Object.keys(formData).forEach(key => { formData[key] = ''; });
-      fileData.value = { base64: '', name: '', type: '' };
-
-      document.getElementById('Bukti-Pembayaran').value = null;
-    } else {
-      throw new Error(result.error || 'Terjadi kesalahan.');
     }
-  } catch (error) {
-    message.value = `Gagal mengirim data: ${error.message}`;
-    isError.value = true;
-  } finally {
-    isLoading.value = false;
-  }
-};
+
+    isLoading.value = true;
+    message.value = '';
+    isError.value = false;
+
+    const finalForm = new FormData();
+
+    for (const key in formData) {
+      finalForm.append(key, formData[key]);
+    }
+
+    finalForm.append('fileData', fileData.value.base64);
+    finalForm.append('fileName', fileData.value.name);
+    finalForm.append('mimeType', fileData.value.type);
+    finalForm.append('g-recaptcha-response', recaptchaToken.value);
+
+    try {
+      const response = await fetch(scriptURL, { method: 'POST', body: finalForm });
+      const result = await response.json();
+
+      if (result.result === 'success') {
+        message.value = 'Data Anda telah berhasil terkirim. Matur Nuwun!';
+        isError.value = false;
+
+        Object.keys(formData).forEach(key => { formData[key] = ''; });
+        fileData.value = { base64: '', name: '', type: '' };
+
+        document.getElementById('Bukti-Pembayaran').value = null;
+      } else {
+        throw new Error(result.error || 'Terjadi kesalahan.');
+      }
+    } catch (error) {
+      message.value = `Gagal mengirim data: ${error.message}`;
+      isError.value = true;
+    } finally {
+      isLoading.value = false;
+    }
+};  
 </script>
 
 <style scoped>
