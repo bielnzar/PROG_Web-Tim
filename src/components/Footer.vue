@@ -66,7 +66,7 @@
         </div>
         <div class="flex items-center">
           <img src="../assets/icons/email.png" alt="Email" class="h-6 mr-2" />
-          <a href="mailto:abinara.its@gmail.com" class="hover:underline">abinara.its1@gmail.com</a>
+          <a href="mailto:abinaraits1@gmail.com" class="hover:underline">abinaraits1@gmail.com</a>
         </div>
       </div>
     </div>
