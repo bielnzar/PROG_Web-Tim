@@ -116,9 +116,9 @@
         <button 
           type="submit"
           :disabled="isLoading"
-          class="w-full mt-6 px-4 py-3 font-semibold text-xl text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-300 disabled:bg-red-400 disabled:cursor-not-allowed"
+          class="w-full mt-6 px-4 py-3 font-semibold text-xl text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-300 disabled:bg-red-500 disabled:cursor-not-allowed"
         >
-          {{ isLoading ? 'Mengirim...' : 'Yok di Submit!' }}
+          {{ isLoading ? 'Mohon Sabar, Lagi Ngirim...' : 'Yok di Submit!' }}
         </button>
       </form>
     </div>
@@ -159,13 +159,13 @@ const handleSubmit = async () => {
     const result = await response.json();
 
     if (result.result === 'success') {
-      message.value = 'Data Anda telah berhasil terkirim. Terima kasih!';
+      message.value = 'Data Anda telah berhasil terkirim. Matur Nuwun!';
       isError.value = false;
       Object.keys(formData).forEach(key => {
         formData[key] = '';
       });
     } else {
-      throw new Error(result.error || 'Terjadi kesalahan yang tidak diketahui.');
+      throw new Error(result.error || 'Terjadi kesalahan.');
     }
   } catch (error) {
     message.value = `Gagal mengirim data: ${error.message}`;
