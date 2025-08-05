@@ -110,7 +110,7 @@
             id="Email"
             name="Email" 
             type="email" 
-            placeholder="Contoh: example@gmail.com" 
+            placeholder="Ex: example@gmail.com" 
             required
             autocomplete="email"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
