@@ -6,6 +6,7 @@ import Achievement from '../components/page/Achievement.vue'
 import Gallery from '../components/page/Gallery.vue'
 import Alumni from '../components/page/Alumni.vue'
 import NotFound from '../components/page/NotFound.vue'
+import Advance  from '@/components/page/Advance.vue'
 
 const routes = [
   { path: '/', component: Home, name: 'Home' },
@@ -14,6 +15,7 @@ const routes = [
   { path: '/achievement', component: Achievement, name: 'Achievement' },
   // { path: '/gallery', component: Gallery, name: 'Gallery' },
   { path: '/alumni', component: Alumni, name: 'Alumni' },
+  { path: '/advance', component: Advance, name: 'Advance' },
   { path: '/:pathMatch(.*)', component: NotFound, name: 'NotFound' },
 ]
 
