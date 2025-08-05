@@ -1,14 +1,28 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4 mt-30">
+  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
     <h2
       data-aos="fade-down"
-      class="place-self-center lg:text-7xl font-bold leading-tight md:text-6xl sm:text-6xl md:mt-0 text-5xl gradient-text"
+      class="place-self-center mt-30 md:mt-20 3xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl font-bold leading-tight gradient-text"
     >
       Road to Advance 1.0
     </h2>
     <h4 class="text-center text-xl italic text-gray-500 mt-4 max-w-3xl" data-aos="zoom-in">“Discover. Learn. Build. Your Robotic Foundation Begins Here”</h4>
-    <div ref="formContainer" class="w-full max-w-2xl p-8 space-y-6 mt-10 bg-white rounded-xl shadow-2xl mb-30">
+    <div class="w-full max-w-3xl p-8 space-y-6 mt-10 bg-white rounded-2xl shadow-2xl mb-30">
       <h1 class="text-3xl font-bold text-center text-gray-900">Workshop Registration Form</h1>
+      
+      <div class="text-center">
+        <button 
+          type="button" 
+          @click="togglePoster" 
+          class="px-8 py-3 overflow-hidden font-bold cursor-pointer text-white bg-gradient-to-r from-red-600 to-red-800 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300 ease-in-out"
+        >
+          {{ isPosterVisible ? 'Hide Poster' : 'Lihat Poster Workshop' }}
+        </button>
+      </div>
+
+      <div v-if="isPosterVisible" class="mt-4 transition-all duration-500 ease-in-out">
+        <img src="/poster-arduino1.png" alt="Poster Workshop" class="w-full h-auto rounded-lg shadow-md">
+      </div>
       
       <form 
         @submit.prevent="handleSubmit"
@@ -20,13 +34,13 @@
         </div>
 
         <div>
-          <label for="Nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+          <label for="Nama" class="block text-sm font-semibold text-gray-700">Nama Lengkap</label>
           <input 
             v-model="formData.Nama"
             id="Nama"
             name="Nama" 
             type="text" 
-            placeholder="Masukkan nama lengkap Anda" 
+            placeholder="Tulis Nama Lengkap" 
             required
             autocomplete="name"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
@@ -34,13 +48,13 @@
         </div>
 
         <div>
-          <label for="NRP" class="block text-sm font-medium text-gray-700">NRP / NIM</label>
+          <label for="NRP" class="block text-sm font-semibold text-gray-700">NRP / NIM</label>
           <input 
             v-model="formData.NRP"
             id="NRP"
             name="NRP" 
             type="text" 
-            placeholder="Masukkan NRP atau NIM Anda" 
+            placeholder="NRP atau NIM kamu" 
             required
             autocomplete="off"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
@@ -48,13 +62,13 @@
         </div>
         
         <div>
-          <label for="Asal-Universitas" class="block text-sm font-medium text-gray-700">Asal Universitas</label>
+          <label for="Asal-Universitas" class="block text-sm font-semibold text-gray-700">Asal Instansi</label>
           <input 
             v-model="formData['Asal Universitas']"
             id="Asal-Universitas"
             name="Asal Universitas" 
             type="text" 
-            placeholder="Contoh: Institut Teknologi Sepuluh Nopember" 
+            placeholder="Ex: Institut Teknologi Sepuluh Nopember" 
             required
             autocomplete="organization"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
@@ -62,13 +76,13 @@
         </div>
 
         <div>
-          <label for="Departemen" class="block text-sm font-medium text-gray-700">Departemen / Jurusan</label>
+          <label for="Departemen" class="block text-sm font-semibold text-gray-700">Departemen / Jurusan</label>
           <input 
             v-model="formData.Departemen"
             id="Departemen"
             name="Departemen" 
             type="text" 
-            placeholder="Contoh: Teknik Informatika" 
+            placeholder="Ex: Teknik Mesin" 
             required
             autocomplete="off"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
@@ -76,13 +90,13 @@
         </div>
 
         <div>
-          <label for="No-WA" class="block text-sm font-medium text-gray-700">No. WA</label>
+          <label for="No-WA" class="block text-sm font-semibold text-gray-700">No. WA</label>
           <input 
             v-model="formData['No. WA']"
             id="No-WA"
             name="No. WA" 
             type="tel" 
-            placeholder="Contoh: 085781821926" 
+            placeholder="Ex: 083381811827" 
             required
             autocomplete="tel"
             class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
@@ -90,7 +104,7 @@
         </div>
 
         <div>
-          <label for="Email" class="block text-sm font-medium text-gray-700">Email</label>
+          <label for="Email" class="block text-sm font-semibold text-gray-700">Email</label>
           <input 
             v-model="formData.Email"
             id="Email"
@@ -104,13 +118,13 @@
         </div>
 
         <div>
-          <label for="Paket-Pilihan" class="block text-sm font-medium text-gray-700">Paket Pilihan</label>
+          <label for="Paket-Pilihan" class="block text-sm font-semibold text-gray-700">Paket Pilihan</label>
           <select 
             v-model="formData['Paket Pilihan']"
             id="Paket-Pilihan"
             name="Paket Pilihan" 
             required
-            class="w-full px-4 py-2 mt-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            class="w-full px-4 py-2 mt-2 cursor-pointer text-gray-900 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
           >
             <option value="" disabled>-- Pilih salah satu paket --</option>
             <option value="Paket A - Materi & Sertifikat">Paket A - Materi & Sertifikat</option>
@@ -120,7 +134,7 @@
         </div>
 
         <div>
-          <label for="Bukti-Pembayaran" class="block text-sm font-medium text-gray-700">Bukti Pembayaran</label>
+          <label for="Bukti-Pembayaran" class="block text-sm font-semibold text-gray-700">Bukti Pembayaran</label>
           <input 
             @change="handleFileChange"
             id="Bukti-Pembayaran"
@@ -128,7 +142,7 @@
             type="file" 
             accept="image/*"
             required
-            class="w-full text-sm text-gray-500 mt-2
+            class="w-full text-sm text-gray-500 cursor-pointer mt-2
                    file:mr-4 file:py-2 file:px-4
                    file:rounded-md file:border-0
                    file:text-sm file:font-semibold
@@ -137,12 +151,25 @@
           >
         </div>
         
+        <div v-if="fileData.base64" class="mt-2">
+          <button 
+            type="button" 
+            @click="toggleImagePreview" 
+            class="text-sm font-semibold text-red-600 hover:text-red-800 transition-colors cursor-pointer"
+          >
+            {{ isImagePreviewVisible ? 'Hide Image' : 'Preview Image' }}
+          </button>
+          <div v-if="isImagePreviewVisible" class="mt-2 p-2 border border-gray-200 rounded-lg bg-gray-50">
+            <img :src="fileData.base64" alt="Preview Bukti Pembayaran" class="max-w-full h-auto rounded-md shadow-sm">
+          </div>
+        </div>
+        
         <div id="recaptcha-widget"></div>
 
         <button 
           type="submit"
           :disabled="isLoading"
-          class="w-full mt-6 px-4 py-3 font-semibold text-xl text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-300 disabled:bg-red-500 disabled:cursor-not-allowed"
+          class="w-full mt-6 px-4 py-3 cursor-pointer font-semibold text-xl text-white bg-gradient-to-r from-red-600 to-red-800 rounded-xl hover:scale-105 duration-500 ease-in-out disabled:bg-red-500 disabled:cursor-not-allowed"
         >
           {{ isLoading ? 'Mohon Sabar, Lagi Ngirim...' : 'Yok di Submit!' }}
         </button>
@@ -153,8 +180,6 @@
 
 <script setup>
 import { reactive, ref, onMounted } from 'vue';
-
-const formContainer = ref(null);
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbz_6b_eyP2DeFiwXF_WqQQPK2f2LHm6pRXbCVUFJCYbo7amwJyVlTo8SThmUfL0X_NjFA/exec';
 
@@ -177,10 +202,25 @@ const fileData = ref({
 const isLoading = ref(false);
 const message = ref('');
 const isError = ref(false);
+const isImagePreviewVisible = ref(false);
+const isPosterVisible = ref(false);
+
+const togglePoster = () => {
+  isPosterVisible.value = !isPosterVisible.value;
+};
+
+const toggleImagePreview = () => {
+  isImagePreviewVisible.value = !isImagePreviewVisible.value;
+};
 
 const handleFileChange = (e) => {
   const file = e.target.files[0];
-  if (!file) return;
+  isImagePreviewVisible.value = false;
+  
+  if (!file) {
+    fileData.value = { base64: '', name: '', type: '' };
+    return;
+  }
 
   const reader = new FileReader();
   reader.onload = (event) => {
@@ -254,6 +294,7 @@ const handleSubmit = async () => {
           formData[key] = '';
         });
         fileData.value = { base64: '', name: '', type: '' };
+        isImagePreviewVisible.value = false;
 
         document.getElementById('Bukti-Pembayaran').value = null;
         
@@ -272,9 +313,7 @@ const handleSubmit = async () => {
     } 
     finally {
       isLoading.value = false;
-      if (formContainer.value) {
-        formContainer.value.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 };  
 </script>
