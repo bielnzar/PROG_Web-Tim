@@ -1,19 +1,19 @@
 <template>
   <section class="fullscreen">
     <div class="bg-white py-16">
-      <div class="mx-auto px-4 lg:ml-10 md:ml-4 ml-2">
-        <div class="flex flex-col md:flex-row items-center justify-between">
+      <div class="mx-auto px-4 xl:mx-10 lg:mx-4 mx-2">
+        <div class="flex flex-col lg:flex-row mt-30 xl:mt-0 lg:mt-0 md:mt-30 sm:mt-20 items-center justify-between">
           <!-- Kolom Kiri -->
-          <div class="md:w-1/2 mb-8 md:mb-0 md:mt-0 mt-10 lg:ml-10 sm:ml-4">
+          <div class="lg:w-1/2 mb-8 md:mb-0 lg:mt-0 mt-10 lg:ml-10 sm:ml-4">
             <h1
               data-aos="fade-down"
-              class="lg:text-7xl font-bold leading-tight md:text-6xl sm:text-6xl md:mt-0 sm:mt-10 mt-30 text-5xl gradient-text"
+              class="lg:text-7xl font-bold leading-tight lg:text-6xl sm:text-6xl text-5xl gradient-text"
             >
               ABINARA-1
             </h1>
             <p
               data-aos="fade-up"
-              class="mt-6 text-lg font-semibold text-gray-800 leading-relaxed text-shadow"
+              class="mt-6 text-lg font-semibold 3xl:pr-30 2xl:pr-20 xl:pr-20 text-gray-800 leading-relaxed text-shadow"
             >
               Abinara-1 is a team that conducts research and competition for
               <span class="highlight"
@@ -45,14 +45,18 @@
             </router-link>
           </div>
 
-          <!-- Kolom Kanan: Gambar Faizzul -->
-          <div class="md:w-1/2 sm:w-1/2 izzul">
-            <img
-              data-aos="zoom-in-up"
-              src="/src/assets/images/Gambar-Hero.png"
-              alt="Anggota Tim Abinara-1"
-              class="w-2xl h-auto lg:px-20 md:px-10"
-            />
+          <!-- Kolom Kanan: Video YouTube -->
+          <div class="lg:w-1/2 w-full p-4 lg:my-10 md:my-6 sm:my-4 " data-aos="zoom-in-left">
+            <div class="aspect-video rounded-2xl cursor-pointer overflow-hidden shadow-2xl hover:scale-102 duration-300 ease-in-out">
+              <iframe
+                class="w-full h-full cursor-pointer"
+                src="https://www.youtube.com/embed/mr9PO-w45q0?autoplay=1&mute=0&loop=1&playlist=mr9PO-w45q0&controls=1&rel=0"
+                title="Profile Team Video Player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +64,7 @@
   </section>
 
   <!-- parallax disini -->
-  <div class="parallax-section mt-10 hidden md:block">
+  <div class="parallax-section mt-10 hidden lg:block">
     <div class="parallax-background"></div>
   </div>
 
@@ -123,14 +127,6 @@ export default {
   color: red;
 }
 
-.izzul {
-  transition: transform 0.3s ease-in-out;
-}
-
-.izzul:hover {
-  transform: scale(1.1);
-}
-
 .parallax-section {
   height: 300px;
   overflow: hidden;
@@ -150,4 +146,5 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 </style>
