@@ -62,7 +62,7 @@
         </div>
         <div class="flex items-center mb-2">
           <img src="../assets/icons/phone.png" alt="Phone" class="h-6 mr-2" />
-          <span>911</span>
+          <span>+62 812-1720-1066</span>
         </div>
         <div class="flex items-center">
           <img src="../assets/icons/email.png" alt="Email" class="h-6 mr-2" />
